@@ -1,5 +1,7 @@
 package ru.hogwarts.school.service.impl;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -20,7 +22,7 @@ import java.util.List;
 @Service
 @Transactional
 public class AvatarServiceImpl implements AvatarService {
-
+    Logger logger = LoggerFactory.getLogger(AvatarService.class);
     @Value("${avatars.dir.path}")
     private Path avatarsDir;
 
@@ -33,9 +35,11 @@ public class AvatarServiceImpl implements AvatarService {
     }
 
     public Avatar getById(Long id) {
+        logger.info("getById method has been invoked");
         return avatarRepository.findById(id).orElseThrow(RuntimeException::new);
     }
     public List<Avatar> getAll (Integer pageNumber, Integer pageSize) {
+        logger.info("getAll method has been invoked");
         PageRequest pageRequest = PageRequest.of(pageNumber - 1, pageSize);
         return avatarRepository.findAll(pageRequest).getContent();
     }
@@ -48,6 +52,7 @@ public class AvatarServiceImpl implements AvatarService {
     }
 
     public String saveToDisk(Long studentId, MultipartFile multipartFile) throws IOException {
+        logger.info("saveToDisk method has been invoked");
         Files.createDirectories(avatarsDir);
         String originalFilename = multipartFile.getOriginalFilename();
         int dotIndex = originalFilename.lastIndexOf(".");
@@ -61,6 +66,7 @@ public class AvatarServiceImpl implements AvatarService {
     }
 
     public Avatar saveToDataBase(Long studentId, MultipartFile multipartFile, String absolutePath) throws IOException {
+        logger.info("saveToDataBase method has been invoked");
         Student studentReference = studentRepository.getReferenceById(studentId);
         Avatar avatar = avatarRepository.findByStudent(studentReference).orElse(new Avatar());
 

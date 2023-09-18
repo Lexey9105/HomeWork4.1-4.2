@@ -2,6 +2,8 @@ package ru.hogwarts.school.service.impl;
 
 
 import jakarta.persistence.EntityNotFoundException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -20,12 +22,14 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+
 import java.util.stream.Collectors;
 
 import static java.nio.file.StandardOpenOption.CREATE_NEW;
 
 @Service
 public class StudentServiceImpl implements StudentService {
+    Logger logger = LoggerFactory.getLogger(StudentService.class);
     private final StudentRepository studentRepository;
 
 
@@ -36,52 +40,64 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public Student createStudent(Student student) {
+        logger.info("createStudent method has been invoked");
         return studentRepository.save(student);
     }
 
     @Override
     public Student updateStudent(Student student) {
+        logger.info("updateStudent method has been invoked");
         return studentRepository.save(student);
     }
 
     @Override
     public Student getStudent(Long id) {
+        logger.info("getStudent method has been invoked");
         Optional<Student> student= studentRepository.findById(id);
         if(student.isPresent()){
             return student.get();}
-        else {throw new EntityNotFoundException("Студент с "+id+"id не существует");
+        else {
+            logger.error("There is no student with id: " + id);
+            throw new EntityNotFoundException("Студент с "+id+"id не существует");
         }
     }
 
     @Override
     public Student deleteStudent(Long id) {
+        logger.info("deleteStudent method has been invoked");
             Optional<Student> student= studentRepository.findById(id);
             if(student.isPresent()){
                studentRepository.deleteById(id);
                 return student.get();}
-            else {throw new EntityNotFoundException("студент с "+id+"id не существует");
+            else {
+                logger.error("There is no student with id: " + id);
+                throw new EntityNotFoundException("студент с "+id+"id не существует");
             }
 
     }
     @Override
 public Collection<Student> findAll(){
+        logger.info("findAll method has been invoked");
         return studentRepository.findAll();
 }
     @Override
     public Collection<Student> getByAge(int startAge,int finalAge) {
-
+        logger.info("getByAge method has been invoked");
         return studentRepository.findStudentsByAgeBetween( startAge, finalAge);
     }
     @Override
     public Object TotalStudentsById(){
+        logger.info("TotalStudentsById method has been invoked");
         return  studentRepository.getTotalStudentsById();
     }
     @Override
     public Object AVGStudentsByAge(){
+        logger.info("AVGStudentsByAge method has been invoked");
         return studentRepository.getAVGStudentsByAge();
     }
     @Override
    public Collection<Student> LastStudents(){
+        logger.info("LastStudents method has been invoked");
         return studentRepository.getLastStudents();
    }
 
