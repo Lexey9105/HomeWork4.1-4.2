@@ -1,6 +1,7 @@
 package ru.hogwarts.school.controller;
 
 
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -90,5 +91,24 @@ public class StudentController {
     public ResponseEntity<Collection<Student>> getLastStudents(){
         return ResponseEntity.ok(studentService.LastStudents());
     }
-
+    @GetMapping("/name/{A}")
+    public ResponseEntity<List<String>> getByNameBeginsLetter(@PathVariable String A){
+        return ResponseEntity.ok(studentService.getByNameBeginsLetter(A));
+    }
+    @GetMapping("Average")
+    public ResponseEntity<Double> getAverageAgeStudent(){
+        return ResponseEntity.ok(studentService.getAverageAgeStudent());
+    }
+    @GetMapping("print-names")
+    @Operation(summary = "Вывод в лог информации о студентах в разных потоках")
+    public ResponseEntity<Void> printStudents(){
+        studentService.printStudents();
+        return ResponseEntity.ok().build();
+    }
+    @GetMapping("print-names-sync")
+    @Operation(summary = "Вывод в лог информации о студентах в разных потоках с синхронизацией")
+    public ResponseEntity<Void> printStudentsSync(){
+        studentService.printStudentsSync();
+        return ResponseEntity.ok().build();
+    }
 }

@@ -56,4 +56,8 @@ public class FacultyController {
          List <Student> students=facultyService.getFaculty(id_faculty).getStudents();
         return ResponseEntity.ok(students);
     }
+@GetMapping("/Longest")
+    public ResponseEntity<String> getLongestFaculty(){
+        return ResponseEntity.ok(facultyService.getLongestFaculty());
+    }
 }

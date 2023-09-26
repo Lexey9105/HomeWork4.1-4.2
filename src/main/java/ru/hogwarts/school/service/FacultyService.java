@@ -13,4 +13,5 @@ public interface FacultyService {
     Faculty deleteFaculty(Long id);
     Collection<Faculty> findAll();
     Collection<Faculty> getByColorOrName(String name, String color);
+    String getLongestFaculty();
 }

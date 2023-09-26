@@ -8,6 +8,7 @@ import ru.hogwarts.school.model.Student;
 
 import java.io.IOException;
 import java.util.Collection;
+import java.util.List;
 
 public interface StudentService {
 
@@ -20,6 +21,14 @@ public interface StudentService {
     Object TotalStudentsById();
     Object AVGStudentsByAge();
     Collection<Student> LastStudents();
+    List<String> getByNameBeginsLetter(String A);
+    Double getAverageAgeStudent();
+
+    void printStudents();
+    void printStudentsSync();
+
+
+
 
 
 }
