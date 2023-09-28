@@ -91,9 +91,9 @@ public class StudentController {
     public ResponseEntity<Collection<Student>> getLastStudents(){
         return ResponseEntity.ok(studentService.LastStudents());
     }
-    @GetMapping("/name/{A}")
-    public ResponseEntity<List<String>> getByNameBeginsLetter(@PathVariable String A){
-        return ResponseEntity.ok(studentService.getByNameBeginsLetter(A));
+    @GetMapping("/name/{a}")
+    public ResponseEntity<List<String>> getByNameBeginsLetter(@PathVariable String a){
+        return ResponseEntity.ok(studentService.getByNameBeginsLetter(a));
     }
     @GetMapping("Average")
     public ResponseEntity<Double> getAverageAgeStudent(){

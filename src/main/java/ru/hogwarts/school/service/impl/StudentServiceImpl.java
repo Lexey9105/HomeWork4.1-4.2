@@ -104,11 +104,12 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public List<String> getByNameBeginsLetter(String A) {
+    public List<String> getByNameBeginsLetter(String a) {
         logger.info("getByNameBeginsLetter method has been invoked");
         return studentRepository.findAll().stream()
-                .filter(s -> s.getName().startsWith(A))
+                .filter(s -> s.getName().startsWith(a))
                 .map(Student::getName)
+                .map(String::toUpperCase)
                 .sorted()
                 .collect(Collectors.toList());
     }
